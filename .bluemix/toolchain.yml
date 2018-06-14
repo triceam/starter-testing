@@ -3,8 +3,8 @@ template:
   name: Continuous Delivery Toolchain
   description: "This toolchain includes tools to develop and deploy your app. Depending on your app, when you create the toolchain, the GitHub repository will either be empty or will contain source code from your app.\n\nThis toolchain uses tools that are part of the Continuous Delivery service. If an instance of that service isn't already in your organization, when you click **Create**, it is automatically added at no cost to you. For more information and terms, see the [IBM Cloud catalog](/catalog/services/continuous-delivery/).\n\nTo get started, click **Create**."
   required:
-    - deploy
     - repo
+    - build
 
 toolchain:
   name: my-application
@@ -34,6 +34,8 @@ services:
         env:
           REPO: repo
           CF_APP: "{{deploy.parameters.app-name}}"
+          CF_SPACE: "{{deploy.parameters.dev-space}}"
+          CF_ORGANIZATION: "{{deploy.parameters.dev-organization}}"
           REGION_ID: "{{deploy.parameters.dev-region}}"
           CHART_NAME: "{{deploy.parameters.chart-name}}"
           KUBE_CLUSTER_NAME: "{{deploy.parameters.kube-cluster-name}}"
@@ -54,6 +56,8 @@ form:
       $ref: deploy.json
     parameters:
       app-name: my-application
+      dev-space: "{{space}}"
+      dev-organization: "{{organization}}"
       dev-region: "{{region}}"
       chart-name: myapplication
       kube-cluster-name: my_kube_cluster
