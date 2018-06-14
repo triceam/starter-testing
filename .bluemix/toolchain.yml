@@ -37,12 +37,6 @@ services:
           CF_SPACE: "{{deploy.parameters.dev-space}}"
           CF_ORGANIZATION: "{{deploy.parameters.dev-organization}}"
           REGION_ID: "{{deploy.parameters.dev-region}}"
-          CHART_NAME: "{{deploy.parameters.chart-name}}"
-          KUBE_CLUSTER_NAME: "{{deploy.parameters.kube-cluster-name}}"
-          CLUSTER_NAMESPACE: "{{deploy.parameters.cluster-namespace}}"
-          API_KEY: "{{deploy.parameters.api-key}}"
-          IMAGE_REGISTRY_TOKEN: "{{deploy.parameters.image-registry-token}}"
-          REGISTRY_NAMESPACE: "{{deploy.parameters.registry-namespace}}"
         execute: true
 
   #Web IDE
@@ -59,10 +53,3 @@ form:
       dev-space: "{{space}}"
       dev-organization: "{{organization}}"
       dev-region: "{{region}}"
-      chart-name: myapplication
-      kube-cluster-name: my_kube_cluster
-      cluster-namespace: my_kube_namespace
-      api-key: "{{api-key}}"
-      image-pull-secret-name: "{{image-pull-secret-name}}"
-      image-registry-token: "{{image-registry-token}}"
-      registry-namespace: my_registry_ns
