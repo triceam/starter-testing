@@ -7,11 +7,20 @@ stages:
     service: ${REPO}
   triggers:
   - type: commit
+  properties:
+  - name: CHART_NAME
+    value: ${CHART_NAME}
+    type: text
   jobs:
   - name: Build
     type: builder
+    build_type: cr
     artifact_dir: ''
-    build_type: shell
+    target:
+      region_id: ${REGION_ID}
+      api_key: ${API_KEY}
+    namespace: ${REGISTRY_NAMESPACE}
+    image_name: ${CHART_NAME}
     script: |-
       #!/bin/bash
       if  [[ -f post_build.sh ]]; then
@@ -26,6 +35,19 @@ stages:
   - type: job
     stage: Build Stage
     job: Build
+  properties:
+  - name: buildProperties
+    value: build.properties
+    type: file
+  - name: CHART_NAME
+    value: ${CHART_NAME}
+    type: text
+  - name: CLUSTER_NAMESPACE
+    value: ${CLUSTER_NAMESPACE}
+    type: text
+  - name: IMAGE_REGISTRY_TOKEN
+    value: ${IMAGE_REGISTRY_TOKEN}
+    type: text
   triggers:
   - type: stage
   jobs:
@@ -33,10 +55,10 @@ stages:
     type: deployer
     target:
       region_id: ${REGION_ID}
-      organization: ${CF_ORGANIZATION}
-      space: ${CF_SPACE}
       application: ${CF_APP}
+      api_key: ${API_KEY}
+      kubernetes_cluster: ${KUBE_CLUSTER_NAME}
     script: |-
       #!/bin/bash
-      cf push "${CF_APP}"
-      # cf logs "${CF_APP}" --recent
+      echo "source the kube_deploy script to run in current shell"
+      source .bluemix/scripts/kube_deploy.sh
