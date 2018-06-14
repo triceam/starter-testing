@@ -54,8 +54,6 @@ form:
       $ref: deploy.json
     parameters:
       app-name: my-application
-      dev-space: "{{space}}"
-      dev-organization: "{{organization}}"
       dev-region: "{{region}}"
       chart-name: myapplication
       kube-cluster-name: my_kube_cluster
