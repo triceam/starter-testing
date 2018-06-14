@@ -32,7 +32,6 @@ stages:
     type: deployer
     target:
       region_id: ${REGION_ID}
-      space: ${CF_SPACE}
       application: ${CF_APP}
     script: |-
       #!/bin/bash
